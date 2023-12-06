@@ -1,13 +1,13 @@
 pipeline {
     agent any 
     stages {
-        stage('Compile and Clean') { 
+        stage('Compile and Clean dev') { 
             steps {
 
                 bat "mvn clean compile"
             }
         }
-        stage('Test') { 
+        stage('Test the dev') { 
             steps {
                 bat "mvn test site"
             }
@@ -19,20 +19,20 @@ pipeline {
             }     
         }
 
-        stage('deploy') { 
+        stage('deploy dev') { 
             steps {
                 bat "mvn package"
             }
         }
 
 
-        stage('Build Docker image'){
+        stage('Build Docker image dev'){
             steps {
                 bat 'docker build -t anvbhaskar/docker_jenkins_pipeline:${BUILD_NUMBER} .'
             }
         }
 
-        stage('Docker Login'){
+        stage('Docker Login '){
             
             steps {
                  withCredentials([string(credentialsId: 'DockerId', variable: 'Dockerpwd')]) {
